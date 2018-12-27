@@ -18,17 +18,16 @@ BX_DIR?=../bx
 GENIE?=$(BX_DIR)/tools/bin/$(OS)/genie
 
 all:
-	$(GENIE) vs2012
-	$(GENIE) vs2013
-	$(GENIE) --gcc=android-arm gmake
-	$(GENIE) --gcc=android-mips gmake
-	$(GENIE) --gcc=android-x86 gmake
-	$(GENIE) --gcc=mingw-gcc gmake
-	$(GENIE) --gcc=linux-gcc gmake
-	$(GENIE) --gcc=osx gmake
-	$(GENIE) --gcc=ios-arm gmake
-	$(GENIE) --gcc=ios-simulator gmake
-	$(GENIE) xcode4
+	$(GENIE)                       vs2017
+	$(GENIE) --gcc=android-arm     gmake
+	$(GENIE) --gcc=android-x86     gmake
+	$(GENIE) --gcc=asmjs           gmake
+	$(GENIE) --gcc=ios-arm         gmake
+	$(GENIE) --gcc=ios-arm64       gmake
+	$(GENIE) --gcc=ios-simulator   gmake
+	$(GENIE) --gcc=ios-simulator64 gmake
+	$(GENIE) --gcc=rpi             gmake
+	$(GENIE)                       xcode8
 
 .build/projects/gmake-android-arm:
 	$(GENIE) --gcc=android-arm gmake
@@ -37,14 +36,6 @@ android-arm-debug: .build/projects/gmake-android-arm
 android-arm-release: .build/projects/gmake-android-arm
 	make -R -C .build/projects/gmake-android-arm config=release
 android-arm: android-arm-debug android-arm-release
-
-.build/projects/gmake-android-mips:
-	$(GENIE) --gcc=android-mips gmake
-android-mips-debug: .build/projects/gmake-android-mips
-	make -R -C .build/projects/gmake-android-mips config=debug
-android-mips-release: .build/projects/gmake-android-mips
-	make -R -C .build/projects/gmake-android-mips config=release
-android-mips: android-mips-debug android-mips-release
 
 .build/projects/gmake-android-x86:
 	$(GENIE) --gcc=android-x86 gmake
@@ -77,12 +68,6 @@ mingw-gcc-debug64: .build/projects/gmake-mingw-gcc
 mingw-gcc-release64: .build/projects/gmake-mingw-gcc
 	make -R -C .build/projects/gmake-mingw-gcc config=release64
 mingw-gcc: mingw-gcc-debug32 mingw-gcc-release32 mingw-gcc-debug64 mingw-gcc-release64
-
-.build/projects/vs2012:
-	$(GENIE) vs2012
-
-.build/projects/vs2013:
-	$(GENIE) vs2013
 
 .build/projects/gmake-osx:
 	$(GENIE) --gcc=osx gmake
